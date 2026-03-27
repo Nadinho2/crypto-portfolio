@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nadinho Crypto • Portfolio</title>
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="neon-text">NADINHO</span>
+                <span class="crypto">CRYPTO</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="trending.html">Trending</a>
+                <a href="where-to-buy.html">Buy in Nigeria</a>
+                <a href="privacy-policy.html">Privacy</a>
+            </div>
+            
+            <button onclick="connectWallet()" class="connect-btn">
+                <i class="fas fa-wallet"></i> Connect Wallet
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="images/profile.jpg" alt="Nadinho" class="profile-pic">
+            <h1>Hi, I'm Nadinho</h1>
+            <p class="tagline">10hr/day Vibe Coder • Crypto Portfolio</p>
+            <p class="location">📍 Lagos, Nigeria</p>
+            
+            <div class="portfolio-value">
+                <p>Total Portfolio Value</p>
+                <h2 id="portfolio-value">$12,845.67</h2>
+                <span class="change positive">+4.8% (24h)</span>
+            </div>
+            
+            <a href="trending.html" class="btn-primary">Explore Trending Coins</a>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO HOLDINGS -->
+    <section class="holdings-section">
+        <div class="section-header">
+            <h2>My Holdings</h2>
+            <a href="#" class="view-all">View All →</a>
+        </div>
+        
+        <div class="holdings-grid">
+            <div class="coin-card">
+                <div class="coin-info">
+                    <span class="coin-symbol">BTC</span>
+                    <span class="coin-name">Bitcoin</span>
+                </div>
+                <div class="coin-value">
+                    <p>0.184 BTC</p>
+                    <h3>$8,245.32</h3>
+                </div>
+                <span class="change positive">+3.2%</span>
+            </div>
+
+            <div class="coin-card">
+                <div class="coin-info">
+                    <span class="coin-symbol">ETH</span>
+                    <span class="coin-name">Ethereum</span>
+                </div>
+                <div class="coin-value">
+                    <p>2.45 ETH</p>
+                    <h3>$3,210.45</h3>
+                </div>
+                <span class="change negative">-1.1%</span>
+            </div>
+
+            <div class="coin-card">
+                <div class="coin-info">
+                    <span class="coin-symbol">SOL</span>
+                    <span class="coin-name">Solana</span>
+                </div>
+                <div class="coin-value">
+                    <p>18.7 SOL</p>
+                    <h3>$1,389.90</h3>
+                </div>
+                <span class="change positive">+7.8%</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE CHART SECTION -->
+    <section class="chart-section">
+        <div class="section-header">
+            <h2>BTC/USDT Live Chart</h2>
+        </div>
+        
+        <!-- TradingView Chart -->
+        <div class="tradingview-widget-container" style="height: 620px; width: 100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+            {
+                "symbol": "BINANCE:BTCUSDT",
+                "width": "100%",
+                "height": "620",
+                "locale": "en",
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "hide_side_toolbar": false,
+                "allow_symbol_change": true,
+                "interval": "15"
+            }
+            </script>
+        </div>
+    </section>
+
+    <!-- QUICK STATS -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Market Cap</h3>
+                <p>$2.48T</p>
+            </div>
+            <div class="stat-card">
+                <h3>24h Volume</h3>
+                <p>$98.4B</p>
+            </div>
+            <div class="stat-card">
+                <h3>BTC Dominance</h3>
+                <p>52.8%</p>
+            </div>
+            <div class="stat-card">
+                <h3>My Vibe Level</h3>
+                <p class="vibe">🔥 100% - Grinding Daily</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built with pure vibe 🔥 by Nadinho • Lagos, Nigeria • @NadinhoCrypto</p>
+        <p>© 2026 Nadinho Crypto Portfolio</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>

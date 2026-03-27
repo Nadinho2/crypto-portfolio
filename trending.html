@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Coins - Nadinho Crypto</title>
+    
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="neon-text">NADINHO</span>
+                <span class="crypto">CRYPTO</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="trending.html" class="active">Trending</a>
+                <a href="where-to-buy.html">Buy in Nigeria</a>
+                <a href="privacy-policy.html">Privacy</a>
+            </div>
+            
+            <button onclick="connectWallet()" class="connect-btn">
+                <i class="fas fa-wallet"></i> Connect Wallet
+            </button>
+        </div>
+    </nav>
+
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+        <h1>🔥 Trending Coins Right Now</h1>
+        <p class="subtitle">Updated Live • March 2026 • Top movers in the market</p>
+    </section>
+
+    <!-- TRENDING COINS GRID -->
+    <section class="trending-section">
+        <div class="section-header">
+            <h2>Top Trending Coins</h2>
+        </div>
+        
+        <div class="coins-grid">
+            
+            <!-- Coin 1 -->
+            <div class="coin-card trending-card">
+                <div class="coin-rank">#1</div>
+                <div class="coin-info">
+                    <span class="coin-symbol">BTC</span>
+                    <span class="coin-name">Bitcoin</span>
+                </div>
+                <div class="coin-price">
+                    <h3>$68,420</h3>
+                    <span class="change positive">+2.45%</span>
+                </div>
+                <div class="coin-marketcap">
+                    Market Cap: <strong>$1.35T</strong>
+                </div>
+            </div>
+
+            <!-- Coin 2 -->
+            <div class="coin-card trending-card">
+                <div class="coin-rank">#2</div>
+                <div class="coin-info">
+                    <span class="coin-symbol">ETH</span>
+                    <span class="coin-name">Ethereum</span>
+                </div>
+                <div class="coin-price">
+                    <h3>$2,650</h3>
+                    <span class="change negative">-1.2%</span>
+                </div>
+                <div class="coin-marketcap">
+                    Market Cap: <strong>$318B</strong>
+                </div>
+            </div>
+
+            <!-- Coin 3 -->
+            <div class="coin-card trending-card">
+                <div class="coin-rank">#3</div>
+                <div class="coin-info">
+                    <span class="coin-symbol">SOL</span>
+                    <span class="coin-name">Solana</span>
+                </div>
+                <div class="coin-price">
+                    <h3>$142.80</h3>
+                    <span class="change positive">+6.8%</span>
+                </div>
+                <div class="coin-marketcap">
+                    Market Cap: <strong>$66.2B</strong>
+                </div>
+            </div>
+
+            <!-- Coin 4 -->
+            <div class="coin-card trending-card">
+                <div class="coin-rank">#4</div>
+                <div class="coin-info">
+                    <span class="coin-symbol">BNB</span>
+                    <span class="coin-name">BNB</span>
+                </div>
+                <div class="coin-price">
+                    <h3>$612.45</h3>
+                    <span class="change positive">+1.9%</span>
+                </div>
+                <div class="coin-marketcap">
+                    Market Cap: <strong>$89.4B</strong>
+                </div>
+            </div>
+
+            <!-- Coin 5 -->
+            <div class="coin-card trending-card">
+                <div class="coin-rank">#5</div>
+                <div class="coin-info">
+                    <span class="coin-symbol">XRP</span>
+                    <span class="coin-name">Ripple</span>
+                </div>
+                <div class="coin-price">
+                    <h3>$0.58</h3>
+                    <span class="change positive">+4.1%</span>
+                </div>
+                <div class="coin-marketcap">
+                    Market Cap: <strong>$32.8B</strong>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MARKET SCREENER / HEATMAP (Optional TradingView) -->
+    <section class="screener-section">
+        <div class="section-header">
+            <h2>Crypto Market Heatmap</h2>
+        </div>
+        
+        <!-- TradingView Crypto Screener Widget -->
+        <div class="tradingview-widget-container" style="height: 500px; width: 100%;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
+            {
+                "width": "100%",
+                "height": "500",
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "locale": "en"
+            }
+            </script>
+        </div>
+    </section>
+
+    <!-- TOP GAINERS & LOSERS -->
+    <section class="gainers-losers">
+        <div class="gainers">
+            <h3>🚀 Top Gainers (24h)</h3>
+            <ul>
+                <li>SOL <span class="positive">+6.8%</span></li>
+                <li>AVAX <span class="positive">+5.3%</span></li>
+                <li>ADA <span class="positive">+4.7%</span></li>
+            </ul>
+        </div>
+        <div class="losers">
+            <h3>📉 Top Losers (24h)</h3>
+            <ul>
+                <li>TON <span class="negative">-3.2%</span></li>
+                <li>LINK <span class="negative">-2.8%</span></li>
+                <li>DOT <span class="negative">-1.9%</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>Built with pure vibe 🔥 by Nadinho • Lagos, Nigeria • @NadinhoCrypto</p>
+        <p>© 2026 Nadinho Crypto Portfolio</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
