@@ -16,6 +16,17 @@ body {
     overflow-x: hidden;
 }
 
+img {
+    max-width: 100%;
+    display: block;
+}
+
+section,
+.main-content {
+    width: min(1200px, calc(100% - 3rem));
+    margin: 0 auto 2.5rem;
+}
+
 /* Blockchain Grid Background */
 body::before {
     content: '';
@@ -114,6 +125,8 @@ body::before {
 .page-header {
     text-align: center;
     padding: 3rem 2rem 2rem;
+    width: min(1200px, calc(100% - 3rem));
+    margin: 0 auto;
 }
 
 .page-header h1 {
@@ -139,6 +152,29 @@ body::before {
     backdrop-filter: blur(10px);
 }
 
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.section-header h2 {
+    font-size: clamp(1.3rem, 2vw, 1.9rem);
+    color: #f7f7f7;
+}
+
+.view-all {
+    color: #00ffc8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.view-all:hover {
+    text-shadow: 0 0 10px #00ffc8;
+}
+
 /* ==================== HERO SECTION ==================== */
 .hero {
     min-height: 60vh;
@@ -147,6 +183,8 @@ body::before {
     justify-content: center;
     text-align: center;
     padding: 4rem 2rem;
+    width: min(1200px, calc(100% - 3rem));
+    margin: 0 auto;
 }
 
 .hero-content {
@@ -231,6 +269,31 @@ body::before {
     transition: all 0.3s ease;
 }
 
+.coin-card {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.coin-price h3,
+.coin-value h3 {
+    font-size: 1.35rem;
+    color: #fff;
+}
+
+.coin-rank {
+    width: max-content;
+    padding: 0.2rem 0.65rem;
+    border: 1px solid rgba(0, 255, 200, 0.35);
+    border-radius: 999px;
+    color: #00ffc8;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.coin-marketcap {
+    color: #bbb;
+}
+
 .coin-card:hover, .trending-card:hover {
     transform: translateY(-8px);
     border-color: #00ffc8;
@@ -253,12 +316,116 @@ body::before {
     font-weight: 600;
 }
 
-/* Grid Layouts */
-.holdings-grid, .coins-grid, .platforms-grid {
+/* Grid Layouts — fluid columns down to one card per row on narrow screens */
+.holdings-grid,
+.coins-grid,
+.platforms-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
     margin-top: 1.5rem;
+}
+
+/* Holdings: row on desktop, stack on narrow viewports */
+.coin-card--holding {
+    min-width: 0;
+}
+
+.coin-card--holding .coin-row-main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem 1rem;
+}
+
+.coin-card--holding .coin-info {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.coin-card--holding .coin-value {
+    flex: 0 1 auto;
+    text-align: right;
+    min-width: min(100%, 12rem);
+}
+
+.coin-card--holding .coin-amount {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 0.2rem;
+}
+
+.coin-card--holding .coin-usd-value {
+    font-variant-numeric: tabular-nums;
+}
+
+.coin-card--holding .coin-24h-change {
+    margin-top: 0.25rem;
+}
+
+/* Trending: rank + price row stays readable on small screens */
+.trending-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.trending-card__body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem 1rem;
+}
+
+.trending-card .coin-info {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.trending-card .coin-price {
+    flex: 0 1 auto;
+    text-align: right;
+    min-width: min(100%, 11rem);
+}
+
+.trending-card .coin-price h3 {
+    font-variant-numeric: tabular-nums;
+}
+
+.trending-card .coin-24h-change {
+    display: inline-block;
+    margin-top: 0.35rem;
+}
+
+.trending-card .coin-marketcap {
+    font-size: 0.9rem;
+    color: #bbb;
+    word-break: break-word;
+}
+
+@media (max-width: 420px) {
+    .coin-card--holding .coin-row-main {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .coin-card--holding .coin-value {
+        text-align: left;
+        min-width: 0;
+    }
+
+    .trending-card__body {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .trending-card .coin-price {
+        text-align: left;
+        min-width: 0;
+    }
 }
 
 /* Stats */
@@ -274,6 +441,17 @@ body::before {
     border-radius: 16px;
     text-align: center;
     border: 1px solid #333;
+}
+
+.stat-card h3 {
+    color: #bbb;
+    margin-bottom: 0.45rem;
+}
+
+.stat-card p {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
 }
 
 /* Steps */
@@ -301,6 +479,84 @@ body::before {
     flex-shrink: 0;
 }
 
+.step-content h3 {
+    margin-bottom: 0.3rem;
+}
+
+.platform-card {
+    background: rgba(15, 15, 35, 0.8);
+    border: 1px solid rgba(0, 255, 200, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.platform-card:hover {
+    border-color: #00ffc8;
+    box-shadow: 0 0 20px rgba(0, 255, 200, 0.22);
+    transform: translateY(-4px);
+}
+
+.platform-card h3 {
+    margin-bottom: 0.4rem;
+}
+
+.platform-card ul,
+.tips-list,
+.privacy-content ul {
+    list-style-position: inside;
+    display: grid;
+    gap: 0.45rem;
+}
+
+.highlight {
+    color: #00ffc8;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+}
+
+.gainers-losers {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.gainers,
+.losers,
+.note {
+    background: rgba(20, 20, 40, 0.75);
+    border: 1px solid rgba(0, 255, 200, 0.2);
+    border-radius: 16px;
+    padding: 1.25rem 1.35rem;
+}
+
+.gainers h3,
+.losers h3 {
+    margin-bottom: 0.8rem;
+}
+
+.gainers ul,
+.losers ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+}
+
+.gainers li,
+.losers li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.45rem;
+}
+
+.gainers li:last-child,
+.losers li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
 /* Footer */
 footer {
     text-align: center;
@@ -311,18 +567,168 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .nav-container {
+        padding: 0 1.25rem;
+    }
+
+    .connect-btn {
+        padding: 10px 18px;
+        font-size: 0.92rem;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 3rem 1rem;
+    }
+
+    .portfolio-value h2 {
+        font-size: 2.2rem;
+    }
+
+    .tradingview-widget-container {
+        height: 450px !important;
+    }
+}
+
 @media (max-width: 768px) {
+    section,
+    .main-content,
+    .page-header,
+    .hero {
+        width: min(1200px, calc(100% - 2rem));
+    }
+
+    .navbar {
+        padding: 0.85rem 0;
+    }
+
+    .nav-container {
+        justify-content: center;
+    }
+
+    .logo {
+        width: 100%;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
     .nav-links {
+        width: 100%;
+        justify-content: center;
         gap: 1rem;
         font-size: 0.95rem;
     }
-    
+
+    .connect-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
     .hero {
-        min-height: 50vh;
         padding: 2rem 1rem;
     }
-    
+
+    .profile-pic {
+        width: 130px;
+        height: 130px;
+    }
+
+    .tagline {
+        font-size: 1.35rem;
+    }
+
+    .location {
+        font-size: 1rem;
+    }
+
     .page-header h1 {
         font-size: 2.2rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .gainers-losers {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        align-items: flex-start;
+    }
+
+    .tradingview-widget-container {
+        height: 390px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.25rem;
+    }
+
+    .crypto {
+        font-size: 0.9rem;
+    }
+
+    .nav-links {
+        gap: 0.75rem 1rem;
+        font-size: 0.86rem;
+    }
+
+    .page-header {
+        padding: 2rem 0 1.2rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.65rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .glass-card,
+    .coin-card,
+    .trending-card,
+    .platform-card,
+    .stat-card {
+        padding: 1.1rem;
+        border-radius: 14px;
+    }
+
+    .portfolio-value {
+        padding: 1.1rem;
+    }
+
+    .portfolio-value h2 {
+        font-size: 1.8rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        text-align: center;
+        padding: 12px 16px;
+        font-size: 0.98rem;
+    }
+
+    .btn-platform {
+        width: 100%;
+        text-align: center;
+    }
+
+    .step {
+        flex-direction: column;
+    }
+
+    .step-number {
+        width: 42px;
+        height: 42px;
+    }
+
+    .tradingview-widget-container {
+        height: 330px !important;
     }
 }

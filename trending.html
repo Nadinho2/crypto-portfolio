@@ -35,7 +35,7 @@
     <!-- PAGE HEADER -->
     <section class="page-header">
         <h1>🔥 Trending Coins Right Now</h1>
-        <p class="subtitle">Updated Live • March 2026 • Top movers in the market</p>
+        <p class="subtitle">Live prices via CoinGecko • <span id="prices-updated-at">Loading…</span></p>
     </section>
 
     <!-- TRENDING COINS GRID -->
@@ -47,82 +47,92 @@
         <div class="coins-grid">
             
             <!-- Coin 1 -->
-            <div class="coin-card trending-card">
+            <div class="coin-card trending-card" data-coin-id="bitcoin">
                 <div class="coin-rank">#1</div>
-                <div class="coin-info">
-                    <span class="coin-symbol">BTC</span>
-                    <span class="coin-name">Bitcoin</span>
-                </div>
-                <div class="coin-price">
-                    <h3>$68,420</h3>
-                    <span class="change positive">+2.45%</span>
+                <div class="trending-card__body">
+                    <div class="coin-info">
+                        <span class="coin-symbol">BTC</span>
+                        <span class="coin-name">Bitcoin</span>
+                    </div>
+                    <div class="coin-price">
+                        <h3 class="coin-spot-price">—</h3>
+                        <span class="change coin-24h-change">—</span>
+                    </div>
                 </div>
                 <div class="coin-marketcap">
-                    Market Cap: <strong>$1.35T</strong>
+                    Market Cap: <strong class="coin-mcap-value">—</strong>
                 </div>
             </div>
 
             <!-- Coin 2 -->
-            <div class="coin-card trending-card">
+            <div class="coin-card trending-card" data-coin-id="ethereum">
                 <div class="coin-rank">#2</div>
-                <div class="coin-info">
-                    <span class="coin-symbol">ETH</span>
-                    <span class="coin-name">Ethereum</span>
-                </div>
-                <div class="coin-price">
-                    <h3>$2,650</h3>
-                    <span class="change negative">-1.2%</span>
+                <div class="trending-card__body">
+                    <div class="coin-info">
+                        <span class="coin-symbol">ETH</span>
+                        <span class="coin-name">Ethereum</span>
+                    </div>
+                    <div class="coin-price">
+                        <h3 class="coin-spot-price">—</h3>
+                        <span class="change coin-24h-change">—</span>
+                    </div>
                 </div>
                 <div class="coin-marketcap">
-                    Market Cap: <strong>$318B</strong>
+                    Market Cap: <strong class="coin-mcap-value">—</strong>
                 </div>
             </div>
 
             <!-- Coin 3 -->
-            <div class="coin-card trending-card">
+            <div class="coin-card trending-card" data-coin-id="solana">
                 <div class="coin-rank">#3</div>
-                <div class="coin-info">
-                    <span class="coin-symbol">SOL</span>
-                    <span class="coin-name">Solana</span>
-                </div>
-                <div class="coin-price">
-                    <h3>$142.80</h3>
-                    <span class="change positive">+6.8%</span>
+                <div class="trending-card__body">
+                    <div class="coin-info">
+                        <span class="coin-symbol">SOL</span>
+                        <span class="coin-name">Solana</span>
+                    </div>
+                    <div class="coin-price">
+                        <h3 class="coin-spot-price">—</h3>
+                        <span class="change coin-24h-change">—</span>
+                    </div>
                 </div>
                 <div class="coin-marketcap">
-                    Market Cap: <strong>$66.2B</strong>
+                    Market Cap: <strong class="coin-mcap-value">—</strong>
                 </div>
             </div>
 
             <!-- Coin 4 -->
-            <div class="coin-card trending-card">
+            <div class="coin-card trending-card" data-coin-id="binancecoin">
                 <div class="coin-rank">#4</div>
-                <div class="coin-info">
-                    <span class="coin-symbol">BNB</span>
-                    <span class="coin-name">BNB</span>
-                </div>
-                <div class="coin-price">
-                    <h3>$612.45</h3>
-                    <span class="change positive">+1.9%</span>
+                <div class="trending-card__body">
+                    <div class="coin-info">
+                        <span class="coin-symbol">BNB</span>
+                        <span class="coin-name">BNB</span>
+                    </div>
+                    <div class="coin-price">
+                        <h3 class="coin-spot-price">—</h3>
+                        <span class="change coin-24h-change">—</span>
+                    </div>
                 </div>
                 <div class="coin-marketcap">
-                    Market Cap: <strong>$89.4B</strong>
+                    Market Cap: <strong class="coin-mcap-value">—</strong>
                 </div>
             </div>
 
             <!-- Coin 5 -->
-            <div class="coin-card trending-card">
+            <div class="coin-card trending-card" data-coin-id="ripple">
                 <div class="coin-rank">#5</div>
-                <div class="coin-info">
-                    <span class="coin-symbol">XRP</span>
-                    <span class="coin-name">Ripple</span>
-                </div>
-                <div class="coin-price">
-                    <h3>$0.58</h3>
-                    <span class="change positive">+4.1%</span>
+                <div class="trending-card__body">
+                    <div class="coin-info">
+                        <span class="coin-symbol">XRP</span>
+                        <span class="coin-name">Ripple</span>
+                    </div>
+                    <div class="coin-price">
+                        <h3 class="coin-spot-price">—</h3>
+                        <span class="change coin-24h-change">—</span>
+                    </div>
                 </div>
                 <div class="coin-marketcap">
-                    Market Cap: <strong>$32.8B</strong>
+                    Market Cap: <strong class="coin-mcap-value">—</strong>
                 </div>
             </div>
 

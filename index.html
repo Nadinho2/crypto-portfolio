@@ -42,8 +42,8 @@
             
             <div class="portfolio-value">
                 <p>Total Portfolio Value</p>
-                <h2 id="portfolio-value">$12,845.67</h2>
-                <span class="change positive">+4.8% (24h)</span>
+                <h2 id="portfolio-value">—</h2>
+                <span class="change positive" id="portfolio-24h-change">Loading…</span>
             </div>
             
             <a href="trending.html" class="btn-primary">Explore Trending Coins</a>
@@ -58,40 +58,46 @@
         </div>
         
         <div class="holdings-grid">
-            <div class="coin-card">
-                <div class="coin-info">
-                    <span class="coin-symbol">BTC</span>
-                    <span class="coin-name">Bitcoin</span>
+            <div class="coin-card coin-card--holding" data-coin-id="bitcoin" data-holdings-amount="0.184">
+                <div class="coin-row-main">
+                    <div class="coin-info">
+                        <span class="coin-symbol">BTC</span>
+                        <span class="coin-name">Bitcoin</span>
+                    </div>
+                    <div class="coin-value">
+                        <p class="coin-amount">0.184 BTC</p>
+                        <h3 class="coin-usd-value">—</h3>
+                    </div>
                 </div>
-                <div class="coin-value">
-                    <p>0.184 BTC</p>
-                    <h3>$8,245.32</h3>
-                </div>
-                <span class="change positive">+3.2%</span>
+                <span class="change coin-24h-change">—</span>
             </div>
 
-            <div class="coin-card">
-                <div class="coin-info">
-                    <span class="coin-symbol">ETH</span>
-                    <span class="coin-name">Ethereum</span>
+            <div class="coin-card coin-card--holding" data-coin-id="ethereum" data-holdings-amount="2.45">
+                <div class="coin-row-main">
+                    <div class="coin-info">
+                        <span class="coin-symbol">ETH</span>
+                        <span class="coin-name">Ethereum</span>
+                    </div>
+                    <div class="coin-value">
+                        <p class="coin-amount">2.45 ETH</p>
+                        <h3 class="coin-usd-value">—</h3>
+                    </div>
                 </div>
-                <div class="coin-value">
-                    <p>2.45 ETH</p>
-                    <h3>$3,210.45</h3>
-                </div>
-                <span class="change negative">-1.1%</span>
+                <span class="change coin-24h-change">—</span>
             </div>
 
-            <div class="coin-card">
-                <div class="coin-info">
-                    <span class="coin-symbol">SOL</span>
-                    <span class="coin-name">Solana</span>
+            <div class="coin-card coin-card--holding" data-coin-id="solana" data-holdings-amount="18.7">
+                <div class="coin-row-main">
+                    <div class="coin-info">
+                        <span class="coin-symbol">SOL</span>
+                        <span class="coin-name">Solana</span>
+                    </div>
+                    <div class="coin-value">
+                        <p class="coin-amount">18.7 SOL</p>
+                        <h3 class="coin-usd-value">—</h3>
+                    </div>
                 </div>
-                <div class="coin-value">
-                    <p>18.7 SOL</p>
-                    <h3>$1,389.90</h3>
-                </div>
-                <span class="change positive">+7.8%</span>
+                <span class="change coin-24h-change">—</span>
             </div>
         </div>
     </section>
