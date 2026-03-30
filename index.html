@@ -44,6 +44,7 @@
                 <p>Total Portfolio Value</p>
                 <h2 id="portfolio-value">—</h2>
                 <span class="change positive" id="portfolio-24h-change">Loading…</span>
+                <p id="wallet-sync-status">Using default portfolio amounts.</p>
             </div>
             
             <a href="trending.html" class="btn-primary">Explore Trending Coins</a>
@@ -54,11 +55,16 @@
     <section class="holdings-section">
         <div class="section-header">
             <h2>My Holdings</h2>
-            <a href="#" class="view-all">View All →</a>
+            <div class="section-actions">
+                <button class="refresh-prices-btn" data-refresh-prices>
+                    <i class="fas fa-rotate-right"></i> Refresh Prices
+                </button>
+                <a href="#" class="view-all">View All →</a>
+            </div>
         </div>
         
         <div class="holdings-grid">
-            <div class="coin-card coin-card--holding" data-coin-id="bitcoin" data-holdings-amount="0.184">
+            <div class="coin-card coin-card--holding" data-coin-id="bitcoin" data-holdings-amount="0.184" data-manual-amount="0.184">
                 <div class="coin-row-main">
                     <div class="coin-info">
                         <span class="coin-symbol">BTC</span>
@@ -72,7 +78,7 @@
                 <span class="change coin-24h-change">—</span>
             </div>
 
-            <div class="coin-card coin-card--holding" data-coin-id="ethereum" data-holdings-amount="2.45">
+            <div class="coin-card coin-card--holding" data-coin-id="ethereum" data-holdings-amount="2.45" data-manual-amount="2.45">
                 <div class="coin-row-main">
                     <div class="coin-info">
                         <span class="coin-symbol">ETH</span>
@@ -86,7 +92,7 @@
                 <span class="change coin-24h-change">—</span>
             </div>
 
-            <div class="coin-card coin-card--holding" data-coin-id="solana" data-holdings-amount="18.7">
+            <div class="coin-card coin-card--holding" data-coin-id="solana" data-holdings-amount="18.7" data-manual-amount="18.7">
                 <div class="coin-row-main">
                     <div class="coin-info">
                         <span class="coin-symbol">SOL</span>

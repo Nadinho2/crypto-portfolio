@@ -160,6 +160,13 @@ body::before {
     margin-bottom: 1.2rem;
 }
 
+.section-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
 .section-header h2 {
     font-size: clamp(1.3rem, 2vw, 1.9rem);
     color: #f7f7f7;
@@ -226,6 +233,12 @@ body::before {
     margin: 0.5rem 0;
 }
 
+#wallet-sync-status {
+    margin-top: 0.55rem;
+    font-size: 0.92rem;
+    color: #9ab;
+}
+
 .change.positive { color: #00ff9d; }
 .change.negative { color: #ff3b5c; }
 
@@ -258,6 +271,31 @@ body::before {
     font-weight: 600;
     display: inline-block;
     margin-top: 1rem;
+}
+
+.refresh-prices-btn {
+    border: 1px solid rgba(0, 255, 200, 0.5);
+    background: rgba(0, 255, 200, 0.08);
+    color: #cffff3;
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.2s ease;
+}
+
+.refresh-prices-btn:hover {
+    border-color: #00ffc8;
+    box-shadow: 0 0 12px rgba(0, 255, 200, 0.3);
+}
+
+.refresh-prices-btn:disabled {
+    opacity: 0.7;
+    cursor: wait;
 }
 
 /* ==================== COIN CARDS ==================== */
@@ -649,6 +687,10 @@ footer {
     .section-header {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .section-actions {
+        width: 100%;
     }
 
     .gainers-losers {

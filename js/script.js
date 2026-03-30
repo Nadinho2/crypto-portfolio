@@ -4,8 +4,48 @@
 
 const COINGECKO_SIMPLE =
     "https://api.coingecko.com/api/v3/simple/price";
+const PRICE_REFRESH_INTERVAL_MS = 30000;
+const ERC20_BALANCE_OF_SELECTOR = "0x70a08231";
+const CHAIN_NAMES = {
+    "0x1": "Ethereum",
+    "0x38": "BNB Chain"
+};
+const WALLET_ASSET_CONFIG = {
+    "0x1": {
+        bitcoin: {
+            type: "erc20",
+            contract: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+            decimals: 8
+        },
+        ethereum: { type: "native", decimals: 18 },
+        solana: {
+            type: "erc20",
+            contract: "0xd31a59c85ae9d8edefec411d448f90841571b89c",
+            decimals: 9
+        }
+    },
+    "0x38": {
+        bitcoin: {
+            type: "erc20",
+            contract: "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+            decimals: 18
+        },
+        ethereum: {
+            type: "erc20",
+            contract: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+            decimals: 18
+        },
+        solana: {
+            type: "erc20",
+            contract: "0x570A5D26f7765Ecb712C0924E4De545B89fD43dF",
+            decimals: 18
+        }
+    }
+};
 
 let connectedAccount = null;
+let pricesRefreshTimer = null;
+let isPriceRefreshInProgress = false;
 
 function shortenAddress(address) {
     if (!address) return "";
@@ -34,11 +74,17 @@ function bindWalletEvents() {
     window.ethereum.on("accountsChanged", (accounts) => {
         connectedAccount = accounts && accounts.length ? accounts[0] : null;
         setConnectButtons(connectedAccount);
+        syncPortfolioWithWallet();
+    });
+
+    window.ethereum.on("chainChanged", () => {
+        syncPortfolioWithWallet();
     });
 
     window.ethereum.on("disconnect", () => {
         connectedAccount = null;
         setConnectButtons(null);
+        resetPortfolioToManual();
     });
 }
 
@@ -53,9 +99,15 @@ async function hydrateWalletState() {
         });
         connectedAccount = accounts && accounts.length ? accounts[0] : null;
         setConnectButtons(connectedAccount);
+        if (connectedAccount) {
+            syncPortfolioWithWallet();
+        } else {
+            resetPortfolioToManual();
+        }
     } catch (err) {
         console.warn("Could not restore wallet session:", err);
         setConnectButtons(null);
+        resetPortfolioToManual();
     }
 }
 
@@ -72,6 +124,7 @@ async function connectWallet() {
         });
         connectedAccount = accounts && accounts.length ? accounts[0] : null;
         setConnectButtons(connectedAccount);
+        await syncPortfolioWithWallet();
     } catch (err) {
         if (err && err.code === 4001) {
             alert("Connection request was rejected.");
@@ -79,6 +132,123 @@ async function connectWallet() {
         }
         console.error("Wallet connection failed:", err);
         alert("Could not connect wallet right now. Please try again.");
+    }
+}
+
+function updateWalletSyncStatus(message) {
+    const status = document.getElementById("wallet-sync-status");
+    if (status) status.textContent = message;
+}
+
+function setRefreshButtonsLoading(isLoading) {
+    const buttons = document.querySelectorAll("[data-refresh-prices]");
+    buttons.forEach((btn) => {
+        btn.disabled = isLoading;
+        btn.innerHTML = isLoading
+            ? '<i class="fas fa-spinner fa-spin"></i> Refreshing...'
+            : '<i class="fas fa-rotate-right"></i> Refresh Prices';
+    });
+}
+
+function setManualAmountOnCard(card) {
+    const manualAmount = parseFloat(card.getAttribute("data-manual-amount"), 10);
+    if (Number.isNaN(manualAmount)) return;
+    card.setAttribute("data-holdings-amount", String(manualAmount));
+    const amountEl = card.querySelector(".coin-amount");
+    const symbol = card.querySelector(".coin-symbol")?.textContent?.trim() || "";
+    if (amountEl) amountEl.textContent = `${manualAmount} ${symbol}`.trim();
+}
+
+function resetPortfolioToManual(statusMessage = "Using default portfolio amounts.") {
+    const cards = document.querySelectorAll(".coin-card--holding[data-coin-id]");
+    if (!cards.length) return;
+    cards.forEach((card) => setManualAmountOnCard(card));
+    loadLiveCoinPrices();
+    updateWalletSyncStatus(statusMessage);
+}
+
+function toBalanceNumber(hexValue, decimals) {
+    if (!hexValue) return null;
+    const raw = BigInt(hexValue);
+    const divisor = 10 ** decimals;
+    return Number(raw) / divisor;
+}
+
+function buildBalanceOfData(address) {
+    const clean = address.toLowerCase().replace(/^0x/, "");
+    return ERC20_BALANCE_OF_SELECTOR + clean.padStart(64, "0");
+}
+
+async function fetchWalletAssetBalance(chainId, coinId, account) {
+    const networkConfig = WALLET_ASSET_CONFIG[chainId];
+    if (!networkConfig || !networkConfig[coinId]) return null;
+    const asset = networkConfig[coinId];
+
+    if (asset.type === "native") {
+        const hex = await window.ethereum.request({
+            method: "eth_getBalance",
+            params: [account, "latest"]
+        });
+        return toBalanceNumber(hex, asset.decimals);
+    }
+
+    const hex = await window.ethereum.request({
+        method: "eth_call",
+        params: [
+            {
+                to: asset.contract,
+                data: buildBalanceOfData(account)
+            },
+            "latest"
+        ]
+    });
+    return toBalanceNumber(hex, asset.decimals);
+}
+
+async function syncPortfolioWithWallet() {
+    const cards = document.querySelectorAll(".coin-card--holding[data-coin-id]");
+    if (!cards.length) return;
+
+    if (!window.ethereum || !connectedAccount) {
+        resetPortfolioToManual();
+        return;
+    }
+
+    try {
+        const chainId = await window.ethereum.request({ method: "eth_chainId" });
+        const chainName = CHAIN_NAMES[chainId] || `Chain ${chainId}`;
+        let syncedCount = 0;
+
+        for (const card of cards) {
+            const coinId = card.getAttribute("data-coin-id");
+            const amountEl = card.querySelector(".coin-amount");
+            const symbol = card.querySelector(".coin-symbol")?.textContent?.trim() || "";
+
+            const balance = await fetchWalletAssetBalance(chainId, coinId, connectedAccount);
+            if (balance == null || Number.isNaN(balance)) {
+                setManualAmountOnCard(card);
+                continue;
+            }
+
+            const normalized = Number(balance.toFixed(8));
+            card.setAttribute("data-holdings-amount", String(normalized));
+            if (amountEl) amountEl.textContent = `${normalized} ${symbol}`.trim();
+            syncedCount += 1;
+        }
+
+        await loadLiveCoinPrices();
+        if (syncedCount > 0) {
+            updateWalletSyncStatus(
+                `Synced ${syncedCount}/${cards.length} assets from ${chainName}.`
+            );
+        } else {
+            updateWalletSyncStatus(
+                `No mapped assets found on ${chainName}; using default amounts.`
+            );
+        }
+    } catch (err) {
+        console.error("Portfolio sync failed:", err);
+        resetPortfolioToManual("Wallet sync failed; using default amounts.");
     }
 }
 
@@ -268,6 +438,8 @@ function updateTrendingFromData(data) {
 }
 
 async function loadLiveCoinPrices() {
+    if (isPriceRefreshInProgress) return;
+
     const holdingIds = Array.from(
         document.querySelectorAll(".coin-card--holding[data-coin-id]")
     ).map((c) => c.getAttribute("data-coin-id"));
@@ -279,6 +451,8 @@ async function loadLiveCoinPrices() {
     const ids = [...new Set([...holdingIds, ...trendingIds])];
     if (!ids.length) return;
 
+    isPriceRefreshInProgress = true;
+    setRefreshButtonsLoading(true);
     try {
         const data = await fetchCoinGeckoPrices(ids);
         if (holdingIds.length) updateHoldingsFromData(data);
@@ -303,7 +477,27 @@ async function loadLiveCoinPrices() {
         if (portfolioCh) portfolioCh.textContent = "Price data unavailable";
         const updated = document.getElementById("prices-updated-at");
         if (updated) updated.textContent = "Could not load (try again later)";
+    } finally {
+        isPriceRefreshInProgress = false;
+        setRefreshButtonsLoading(false);
     }
+}
+
+function setupPriceRefreshControls() {
+    document.querySelectorAll("[data-refresh-prices]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            loadLiveCoinPrices();
+        });
+    });
+}
+
+function startAutoPriceRefresh() {
+    if (pricesRefreshTimer) clearInterval(pricesRefreshTimer);
+    pricesRefreshTimer = setInterval(() => {
+        if (document.visibilityState === "visible") {
+            loadLiveCoinPrices();
+        }
+    }, PRICE_REFRESH_INTERVAL_MS);
 }
 
 function setActiveNav() {
@@ -329,6 +523,8 @@ document.addEventListener("DOMContentLoaded", function () {
     setActiveNav();
     hydrateWalletState();
     bindWalletEvents();
+    setupPriceRefreshControls();
+    startAutoPriceRefresh();
     loadLiveCoinPrices();
 
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
